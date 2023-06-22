@@ -5,7 +5,6 @@ import com.api.model.Ciclista;
 import com.api.service.CiclistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +59,7 @@ public class CiclistaController {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
             return new ResponseEntity<>(ciclista.toString(), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<String>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
