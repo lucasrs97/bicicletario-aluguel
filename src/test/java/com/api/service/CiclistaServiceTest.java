@@ -1,5 +1,6 @@
 package com.api.service;
 
+import com.api.builder.CadastrarCiclistaDTOBuilder;
 import com.api.dao.CiclistaDAO;
 import com.api.dto.CadastrarCiclistaDTO;
 import com.api.enumerator.CiclistaStatus;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.api.util.Constantes.DADOS_ALTERADOS_SUCESSO;
+import static com.api.util.Constantes.MENSAGEM_ATIVACAO_CADASTRO;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.verify;
@@ -103,6 +105,23 @@ class CiclistaServiceTest {
         verifyNoMoreInteractions(emailService);
         verifyNoMoreInteractions(cartaoDeCreditoService);
         verifyNoInteractions(dao);
+    }
+
+    @Test
+    void cadastrarCiclista_quandoDadosValidos_deveCadastrar() {
+        CadastrarCiclistaDTO cadastrarCiclistaDTO = CadastrarCiclistaDTOBuilder.build();
+        Ciclista ciclista = cadastrarCiclistaDTO.getCiclista();
+        CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getMeioDePagamento();
+
+        when(emailService.emailValido(ciclista.getEmail())).thenReturn(true);
+        when(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)).thenReturn(false);
+
+        Assertions.assertDoesNotThrow(() -> {
+            ciclistaService.cadastrarCiclista(cadastrarCiclistaDTO);
+        });
+
+        verify(dao, Mockito.times(1)).salvarCiclista(ciclista);
+        verify(emailService, Mockito.times(1)).enviarEmail(ciclista.getEmail(), MENSAGEM_ATIVACAO_CADASTRO);
     }
 
     @Test
