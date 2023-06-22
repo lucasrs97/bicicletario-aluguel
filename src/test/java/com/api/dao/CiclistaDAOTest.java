@@ -71,7 +71,9 @@ public class CiclistaDAOTest {
         assertEquals(ciclista.getCpf(), ciclistaRecuperado.getCpf());
         assertEquals(ciclista.getStatus(), ciclistaRecuperado.getStatus());
         assertEquals(ciclista.getNascimento(), ciclistaRecuperado.getNascimento());
-        assertEquals(ciclista.getPassaporte(), ciclistaRecuperado.getPassaporte());
+        assertEquals(ciclista.getPassaporte().getNumero(), ciclistaRecuperado.getPassaporte().getNumero());
+        assertEquals(ciclista.getPassaporte().getValidade(), ciclistaRecuperado.getPassaporte().getValidade());
+        assertEquals(ciclista.getPassaporte().getPais(), ciclistaRecuperado.getPassaporte().getPais());
         assertEquals(ciclista.getNacionalidade(), ciclistaRecuperado.getNacionalidade());
         assertEquals(ciclista.getUrlFotoDocumento(), ciclistaRecuperado.getUrlFotoDocumento());
     }
