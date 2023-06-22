@@ -43,8 +43,7 @@ public class CiclistaServiceTest {
 
     @Test
     void cadastrarCiclista_quandoadastrarCiclistaDTOForNulo_deveLancarExcecao() {
-        when(cadastrarCiclistaDTO.getCiclista()).thenReturn(null);
-        when(cadastrarCiclistaDTO.getMeioDePagamento()).thenReturn(null);
+        CadastrarCiclistaDTO cadastrarCiclistaDTO = null;
 
         assertThrows(IllegalArgumentException.class, () -> ciclistaService.cadastrarCiclista(cadastrarCiclistaDTO));
 
