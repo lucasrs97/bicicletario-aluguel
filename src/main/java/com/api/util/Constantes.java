@@ -1,6 +1,6 @@
 package com.api.util;
 
-public class Constantes {
+public final class Constantes {
     public static final String MENSAGEM_ATIVACAO_CADASTRO = "Clique no link abaixo para ativar seu cadastro.";
     public static final String DADOS_ALTERADOS_SUCESSO = "Dados alterados com sucesso.";
     public static final String CICLISTA_CADASTRADO_SUCESSO = "Ciclista cadastrado com sucesso. Aguardando o e-mail ser confirmado.";
