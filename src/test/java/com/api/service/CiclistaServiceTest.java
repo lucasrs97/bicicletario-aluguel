@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CiclistaServiceTest {
+class CiclistaServiceTest {
 
     @Mock
     private CadastrarCiclistaDTO cadastrarCiclistaDTO;

@@ -8,10 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class CadastrarCiclistaDTOTest {
+class CadastrarCiclistaDTOTest {
 
     @Test
-    public void getCiclista() {
+    void getCiclista() {
         Ciclista ciclista = new Ciclista();
         CadastrarCiclistaDTO cadastrarCiclistaDTO = new CadastrarCiclistaDTO();
 
@@ -21,7 +21,7 @@ public class CadastrarCiclistaDTOTest {
     }
 
     @Test
-    public void getSetMeioDePagamento() {
+    void getSetMeioDePagamento() {
         CartaoDeCredito meioDePagamento = new CartaoDeCredito();
         CadastrarCiclistaDTO cadastrarCiclistaDTO = new CadastrarCiclistaDTO();
 

@@ -21,13 +21,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-public class CiclistaDAOTest {
+class CiclistaDAOTest {
 
     @InjectMocks
     private CiclistaDAO ciclistaDAO;
 
     @Test
-    public void salvarCiclista_naoDeveLancarException() {
+    void salvarCiclista_naoDeveLancarException() {
         Ciclista ciclista = new Ciclista();
         ciclista.setNome("Lucas");
 
@@ -35,7 +35,7 @@ public class CiclistaDAOTest {
     }
 
     @Test
-    public void alterarCiclista_naoDeveLancarException() {
+    void alterarCiclista_naoDeveLancarException() {
         Ciclista ciclista = new Ciclista();
         ciclista.setNome("Lucas");
 
@@ -43,7 +43,7 @@ public class CiclistaDAOTest {
     }
 
     @Test
-    public void recuperarCiclista_deveRecuperarCiclista() {
+    void recuperarCiclista_deveRecuperarCiclista() {
         Ciclista ciclista = new Ciclista();
         ciclista.setId(1L);
         ciclista.setStatus(CiclistaStatus.ATIVO);

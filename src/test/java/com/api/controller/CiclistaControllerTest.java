@@ -29,7 +29,7 @@ import static com.api.util.Constantes.ERRO_CADASTRAR_CICLISTA;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CiclistaControllerTest {
+class CiclistaControllerTest {
 
     @MockBean
     private CiclistaService ciclistaService;

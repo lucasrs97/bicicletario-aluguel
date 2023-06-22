@@ -9,10 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-public class CartaoDeCreditoTest {
+class CartaoDeCreditoTest {
 
     @Test
-    public void testa_construtor_e_gets() {
+    void testa_construtor_e_gets() {
         Long id = 1L;
         String nomeTitular = "Lucas";
         String numero = "1234567890123456";
@@ -29,7 +29,7 @@ public class CartaoDeCreditoTest {
     }
 
     @Test
-    public void testa_sets() {
+    void testa_sets() {
         CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
 
         Long id = 1L;

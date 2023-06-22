@@ -17,7 +17,7 @@ class BicicletarioAluguelApplicationTests {
 	}
 
 	@Test
-	public void mainTest() {
+	void mainTest() {
 		assertDoesNotThrow(() -> {
 			SpringApplication application = new SpringApplication(BicicletarioAluguelApplication.class);
 			application.setWebApplicationType(WebApplicationType.NONE);

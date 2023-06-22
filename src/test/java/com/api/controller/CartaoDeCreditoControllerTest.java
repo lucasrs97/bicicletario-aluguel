@@ -25,7 +25,7 @@ import static org.mockito.Mockito.doThrow;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CartaoDeCreditoControllerTest {
+class CartaoDeCreditoControllerTest {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String data = "31/12/2023";

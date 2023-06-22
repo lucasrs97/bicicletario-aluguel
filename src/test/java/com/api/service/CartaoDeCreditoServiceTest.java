@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CartaoDeCreditoServiceTest {
+class CartaoDeCreditoServiceTest {
 
     @InjectMocks
     private CartaoDeCreditoService cartaoDeCreditoService;

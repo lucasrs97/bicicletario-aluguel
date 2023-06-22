@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CiclistaTest {
+class CiclistaTest {
 
     @Test
     void testa_construtor_e_gets() {

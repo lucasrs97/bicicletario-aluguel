@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Date;
 
 @ExtendWith(SpringExtension.class)
-public class CartaoDAOTest {
+class CartaoDAOTest {
 
     @InjectMocks
     private CartaoDAO cartaoDAO;
@@ -21,7 +21,7 @@ public class CartaoDAOTest {
     private Log log;
 
     @Test
-    public void alterarCartao_naoDeveLancarException() {
+    void alterarCartao_naoDeveLancarException() {
         CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
         cartaoDeCredito.setNomeTitular("Lucas");
         cartaoDeCredito.setNumero("1234567890");
