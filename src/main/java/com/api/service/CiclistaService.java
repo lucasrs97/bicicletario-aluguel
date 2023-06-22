@@ -9,11 +9,7 @@ import com.api.model.Ciclista;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.api.util.Constantes.DADOS_ALTERADOS_SUCESSO;
-import static com.api.util.Constantes.ERRO_ATIVAR_CICLISATA;
-import static com.api.util.Constantes.ERRO_CADASTRAR_CICLISTA;
-import static com.api.util.Constantes.ERRO_RECUPERAR_CICLISTA;
-import static com.api.util.Constantes.MENSAGEM_ATIVACAO_CADASTRO;
+import static com.api.util.Constantes.*;
 
 @Service
 public class CiclistaService {
@@ -81,6 +77,10 @@ public class CiclistaService {
     }
 
     public void alterarCiclista(Ciclista ciclista) {
+        if(ciclista == null) {
+            throw new IllegalArgumentException(ERRO_ALTERAR_CICLISTA);
+        }
+
         dao.alterarCiclista(ciclista);
         emailService.enviarEmail(ciclista.getEmail(), DADOS_ALTERADOS_SUCESSO);
     }

@@ -15,8 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static com.api.util.Constantes.DADOS_ALTERADOS_SUCESSO;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -101,7 +106,7 @@ public class CiclistaServiceTest {
     }
 
     @Test
-    void ativarCiclista_naoDeveLancarExceptionQuandoStatusPendente() {
+    void ativarCiclista_naoDeveLancarException_quandoStatusPendente() {
         Ciclista ciclista = new Ciclista();
         ciclista.setId(1L);
         ciclista.setNome("Lucas");
@@ -115,7 +120,7 @@ public class CiclistaServiceTest {
     }
 
     @Test
-    void ativarCiclista_deveLancarExceptionQuandoStatusNaoPendente() {
+    void ativarCiclista_deveLancarException_quandoStatusNaoPendente() {
         Ciclista ciclista = new Ciclista();
         ciclista.setId(1L);
         ciclista.setNome("Lucas");
@@ -124,5 +129,27 @@ public class CiclistaServiceTest {
         when(dao.recuperarCiclista(anyLong())).thenReturn(ciclista);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> ciclistaService.ativarCiclista(1L));
+    }
+
+    @Test
+    void alterarCiclista_deveLancarException_quandoCiclistaNulo() {
+        Ciclista ciclista = null;
+        assertThrows(IllegalArgumentException.class, () -> ciclistaService.alterarCiclista(ciclista));
+    }
+
+    @Test
+    void alterarCiclista_deveAlterarComSucesso() {
+        Ciclista ciclista = new Ciclista();
+        ciclista.setId(1L);
+        ciclista.setNome("Lucas");
+        ciclista.setEmail("lucas@gmail.com");
+
+        Mockito.doNothing().when(dao).alterarCiclista(ciclista);
+        Mockito.doNothing().when(emailService).enviarEmail(ciclista.getEmail(), DADOS_ALTERADOS_SUCESSO);
+
+        ciclistaService.alterarCiclista(ciclista);
+
+        verify(dao, Mockito.times(1)).alterarCiclista(ciclista);
+        verify(emailService, Mockito.times(1)).enviarEmail(ciclista.getEmail(), DADOS_ALTERADOS_SUCESSO);
     }
 }
