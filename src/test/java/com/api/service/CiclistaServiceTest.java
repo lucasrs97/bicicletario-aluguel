@@ -152,4 +152,22 @@ public class CiclistaServiceTest {
         verify(dao, Mockito.times(1)).alterarCiclista(ciclista);
         verify(emailService, Mockito.times(1)).enviarEmail(ciclista.getEmail(), DADOS_ALTERADOS_SUCESSO);
     }
+
+    @Test
+    void recuperarCiclista_deveLancarException_quandoIdCiclistaForNulo() {
+        Long idCiclista = null;
+        assertThrows(IllegalArgumentException.class, () -> ciclistaService.recuperarCiclista(idCiclista));
+    }
+
+    @Test
+    void recuperarCiclista_naoDeveLancarException_quandoIdCiclistaForValido() {
+        Long idCiclista = 1L;
+        Ciclista ciclista = new Ciclista();
+        ciclista.setNome("Lucas");
+        ciclista.setId(idCiclista);
+
+        when(dao.recuperarCiclista(idCiclista)).thenReturn(ciclista);
+        ciclistaService.recuperarCiclista(idCiclista);
+        verify(dao, Mockito.times(1)).recuperarCiclista(idCiclista);
+    }
 }
