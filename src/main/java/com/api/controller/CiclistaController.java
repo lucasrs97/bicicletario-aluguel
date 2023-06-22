@@ -24,7 +24,7 @@ public class CiclistaController {
     @Autowired
     private CiclistaService ciclistaService;
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<String> cadastrar(@RequestBody CadastrarCiclistaDTO cadastro) {
         try {
             this.ciclistaService.cadastrarCiclista(cadastro);
@@ -34,7 +34,7 @@ public class CiclistaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/{idCiclista}/ativar")
     public ResponseEntity<String> confirmarEmail(@PathVariable Long idCiclista) {
         try {
             this.ciclistaService.ativarCiclista(idCiclista);
@@ -44,7 +44,7 @@ public class CiclistaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping
     public ResponseEntity<String> alterar(@RequestBody Ciclista ciclista) {
         try {
             this.ciclistaService.alterarCiclista(ciclista);
@@ -54,7 +54,7 @@ public class CiclistaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{idCiclista}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/{idCiclista}")
     public ResponseEntity<String> recuperar(@PathVariable Long idCiclista) {
         try {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
@@ -63,7 +63,5 @@ public class CiclistaController {
             return new ResponseEntity<String>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
-
-
 
 }
