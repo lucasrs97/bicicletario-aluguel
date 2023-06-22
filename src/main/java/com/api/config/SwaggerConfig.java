@@ -1,4 +1,4 @@
-package com.example.echo.config;
+package com.api.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -23,8 +23,8 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.echo")) //pacote base onde estão todas as classes java
-                .paths(regex("/echo.*")) //caminhos para acesso aos endpoints
+                .apis(RequestHandlerSelectors.basePackage("com.api")) //pacote base onde estão todas as classes java
+                .paths(regex("/bicicletario-aluguel.*")) //caminhos para acesso aos endpoints
                 .build()
                 .apiInfo(metaInfo());
     }
@@ -34,8 +34,8 @@ public class SwaggerConfig {
 	 */	
     private ApiInfo metaInfo() {
         return new ApiInfoBuilder()
-        	    .title("Spring Boot REST API Echo")
-        	    .description("Exemplo de aplicação REST API com Spring Boot ")
+        	    .title("Spring Boot REST API Bicicletário Aluguel")
+        	    .description("Aplicação REST API com Spring Boot ")
         	    .version("1.0")
         	    .build();     	           
     }
