@@ -6,11 +6,11 @@ public enum Nacionalidade {
     ESTRANGEIRO("E", "Estrangeiro");
 
     private String codigo;
-    private String descrição;
+    private String descricao;
 
-    Nacionalidade(String codigo, String descrição) {
+    Nacionalidade(String codigo, String descricao) {
         this.codigo = codigo;
-        this.descrição = descrição;
+        this.descricao = descricao;
     }
 
 }
