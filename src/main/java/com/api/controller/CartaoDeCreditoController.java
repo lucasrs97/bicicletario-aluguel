@@ -20,7 +20,7 @@ public class CartaoDeCreditoController {
     private CartaoDeCreditoService cartaoDeCreditoService;
 
     @PutMapping("/{idCiclista}")
-    public ResponseEntity<?> alterarCartao(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable Long idCiclista) {
+    public ResponseEntity<String> alterarCartao(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable Long idCiclista) {
         try {
             this.cartaoDeCreditoService.alterar(cartaoDeCredito, idCiclista);
             return new ResponseEntity<>(DADOS_CARTAO_ALTERADOS_SUCESSO, HttpStatus.OK);

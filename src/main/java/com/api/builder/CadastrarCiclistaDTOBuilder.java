@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 
 public class CadastrarCiclistaDTOBuilder {
 
+    private CadastrarCiclistaDTOBuilder() {}
+
     public static CadastrarCiclistaDTO build() {
         CadastrarCiclistaDTO cadastro = new CadastrarCiclistaDTO();
 
@@ -35,7 +37,9 @@ public class CadastrarCiclistaDTOBuilder {
             ciclista.setPassaporte(new Passaporte("123,", dateFormat.parse(dataValidadePassaporte), "BR"));
             cartaoDeCredito.setValidade(dateFormat.parse(dataValidadeCartao));
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            ciclista.setNacionalidade(null);
+            ciclista.setPassaporte(new Passaporte("123,", null, "BR"));
+            cartaoDeCredito.setValidade(null);
         }
 
         cadastro.setCiclista(ciclista);

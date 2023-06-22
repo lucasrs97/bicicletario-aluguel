@@ -25,7 +25,7 @@ public class CiclistaController {
     private CiclistaService ciclistaService;
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> cadastrar(@RequestBody CadastrarCiclistaDTO cadastro) {
+    public ResponseEntity<String> cadastrar(@RequestBody CadastrarCiclistaDTO cadastro) {
         try {
             this.ciclistaService.cadastrarCiclista(cadastro);
             return new ResponseEntity<>(CICLISTA_CADASTRADO_SUCESSO, HttpStatus.CREATED);
@@ -35,7 +35,7 @@ public class CiclistaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{idCiclista}/ativar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> confirmarEmail(@PathVariable Long idCiclista) {
+    public ResponseEntity<String> confirmarEmail(@PathVariable Long idCiclista) {
         try {
             this.ciclistaService.ativarCiclista(idCiclista);
             return new ResponseEntity<>(EMAIL_CONFIRMADO_SUCESSO, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class CiclistaController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterar(@RequestBody Ciclista ciclista) {
+    public ResponseEntity<String> alterar(@RequestBody Ciclista ciclista) {
         try {
             this.ciclistaService.alterarCiclista(ciclista);
             return new ResponseEntity<>(CICLISTA_ALTERADO_SUCESSO, HttpStatus.OK);
@@ -55,12 +55,12 @@ public class CiclistaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{idCiclista}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> recuperar(@PathVariable Long idCiclista) {
+    public ResponseEntity<String> recuperar(@PathVariable Long idCiclista) {
         try {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
-            return new ResponseEntity<>(ciclista, HttpStatus.OK);
+            return new ResponseEntity<>(ciclista.toString(), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<String>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 

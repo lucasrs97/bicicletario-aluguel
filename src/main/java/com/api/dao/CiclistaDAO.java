@@ -39,7 +39,8 @@ public class CiclistaDAO {
             ciclista.setNascimento(dateFormat.parse(dataNascimento));
             ciclista.setPassaporte(new Passaporte("123,", dateFormat.parse(dataValidadePassaporte), "BR"));
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            ciclista.setNascimento(null);
+            ciclista.setPassaporte(new Passaporte("123,", null, "BR"));
         }
 
         return ciclista;
