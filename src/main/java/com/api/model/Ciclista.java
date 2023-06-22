@@ -3,13 +3,12 @@ package com.api.model;
 import com.api.enumerator.CiclistaStatus;
 import com.api.enumerator.Nacionalidade;
 import com.api.vo.Passaporte;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ciclista {
