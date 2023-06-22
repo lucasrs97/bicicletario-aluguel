@@ -8,7 +8,7 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
-    - mvn verify sonar:sonar -Dsonar.projectKey=lucasramalho.s97_bicicletario-aluguel
+    - mvn verify sonar:sonar -Pcoverage -Dsonar.projectKey=lucasramalho.s97_bicicletario-aluguel
   only:
     - merge_requests
     - master
