@@ -15,6 +15,7 @@
 	<description>Microsserviço Aluguel para a API do Bicicletário.</description>
 
 	<properties>
+		<sonar.projectKey>bicicletario-aluguel</sonar.projectKey>
 		<sonar.organization>lucasramalho-s97</sonar.organization>
 	</properties>
 	
