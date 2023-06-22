@@ -94,7 +94,7 @@ public class CiclistaService {
     }
 
     private boolean registroPendente(CiclistaStatus status) {
-        return status == null;
+        return status == CiclistaStatus.AGUARDANDO_CONFIRMACAO;
     }
 
 }
