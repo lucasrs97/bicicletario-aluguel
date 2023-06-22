@@ -63,10 +63,17 @@ public class CiclistaDAOTest {
             throw new RuntimeException(e);
         }
 
-        //when(ciclistaDAO.recuperarCiclista(1L)).thenReturn(ciclista);
         Ciclista ciclistaRecuperado = ciclistaDAO.recuperarCiclista(1L);
 
-        assertEquals(ciclista, ciclistaRecuperado);
+        assertEquals(ciclista.getId(), ciclistaRecuperado.getId());
+        assertEquals(ciclista.getNome(), ciclistaRecuperado.getNome());
+        assertEquals(ciclista.getEmail(), ciclistaRecuperado.getEmail());
+        assertEquals(ciclista.getCpf(), ciclistaRecuperado.getCpf());
+        assertEquals(ciclista.getStatus(), ciclistaRecuperado.getStatus());
+        assertEquals(ciclista.getNascimento(), ciclistaRecuperado.getNascimento());
+        assertEquals(ciclista.getPassaporte(), ciclistaRecuperado.getPassaporte());
+        assertEquals(ciclista.getNacionalidade(), ciclistaRecuperado.getNacionalidade());
+        assertEquals(ciclista.getUrlFotoDocumento(), ciclistaRecuperado.getUrlFotoDocumento());
     }
 
 }
