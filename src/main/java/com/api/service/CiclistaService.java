@@ -73,9 +73,6 @@ public class CiclistaService {
      */
     public void ativarCiclista(Long idCiclista) {
         Ciclista ciclista = recuperarCiclista(idCiclista);
-        if(!(ciclista.getStatus() == CiclistaStatus.AGUARDANDO_CONFIRMACAO)) {
-            throw new IllegalArgumentException(ERRO_ATIVAR_CICLISATA);
-        }
 
         ciclista.setStatus(CiclistaStatus.ATIVO);
     }
