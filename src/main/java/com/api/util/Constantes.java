@@ -1,8 +1,9 @@
 package com.api.util;
 
-public final class Constantes {
-    private Constantes() {}
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+public final class Constantes {
     public static final String MENSAGEM_ATIVACAO_CADASTRO = "Clique no link abaixo para ativar seu cadastro.";
     public static final String DADOS_ALTERADOS_SUCESSO = "Dados alterados com sucesso.";
     public static final String CICLISTA_CADASTRADO_SUCESSO = "Ciclista cadastrado com sucesso. Aguardando o e-mail ser confirmado.";
@@ -14,5 +15,8 @@ public final class Constantes {
     public static final String ERRO_RECUPERAR_CICLISTA = "Erro ao recuperar o ciclista.";
     public static final String DADOS_CARTAO_ALTERADOS_SUCESSO = "Dados do cartão alterados com sucesso";
     public static final String ERRO_ALTERAR_DADOS_CARTAO = "Erro ao alterar os dados do cartão de crédito.";
-
+    public static final String BICICLETA_LIBERADA = "Bicicleta Liberada";
+    public static final String ERRO_ALUGAR_BICICLETA = "Erro ao alugar a bicicleta";
+    public static final String BICICLETA_DEVOLVIDA = "Bicicleta Devolvida";
+    public static final String ERRO_DEVOLVER_BICICLETA = "Erro ao devolver a bicicleta";
 }

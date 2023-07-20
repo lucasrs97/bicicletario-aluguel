@@ -5,10 +5,16 @@ import com.api.dao.CiclistaDAO;
 import com.api.model.CartaoDeCredito;
 import com.api.model.Ciclista;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class CartaoDeCreditoService {
@@ -25,26 +31,32 @@ public class CartaoDeCreditoService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String URL_EXTERNOS = "https://bicicletario-pm-production.up.railway.app/";
+    @Value("${external.api.url}")
+    private String externalApiUrl;
 
+    public boolean cartaoDeCreditoValido(String numeroCartao) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
-    public boolean cartaoDeCreditoInvalido(CartaoDeCredito cartaoDeCredito) {
+            Map<String, String> requestBody = new HashMap<>();
+            requestBody.put("cartao", numeroCartao);
 
-        HttpEntity<String> request = new HttpEntity<>(cartaoDeCredito.getNumero());
-        ResponseEntity<String> response = restTemplate
-                .postForEntity(URL_EXTERNOS + "cobranca/validaCartaoDeCredito/", request, String.class);
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
 
-        String body = response.getBody();
-        System.out.println(body);
-        return true;
-
+            restTemplate.postForEntity(externalApiUrl + "cobranca/validaCartaoDeCredito/", request, String.class);
+            return true;
+        } catch (HttpClientErrorException ex) {
+            System.err.println("Erro ao tentar validar os dados do cartão. (erro " + ex.getStatusCode() + "): " + ex.getResponseBodyAsString());
+            return false;
+        }
     }
 
     public void alterar(CartaoDeCredito cartaoDeCredito, Long idCiclista) {
         Ciclista ciclista = dao.recuperarCiclista(idCiclista);
 
         // Integração 1
-        if(cartaoDeCreditoInvalido(cartaoDeCredito)) {
+        if(cartaoDeCreditoValido(cartaoDeCredito.getNumero())) {
             throw new IllegalArgumentException("Cartão de crédito reprovado.");
         }
 

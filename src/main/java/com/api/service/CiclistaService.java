@@ -4,7 +4,6 @@ import com.api.dao.CartaoDAO;
 import com.api.dao.CiclistaDAO;
 import com.api.dto.CadastrarCiclistaDTO;
 import com.api.enumerator.CiclistaStatus;
-import com.api.model.CartaoDeCredito;
 import com.api.model.Ciclista;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,10 @@ public class CiclistaService {
     @Autowired
     private CartaoDAO cartaoDAO;
 
+    /**
+     * Use Case 01
+     * @param cadastrarCiclistaDTO
+     */
     public void cadastrarCiclista(CadastrarCiclistaDTO cadastrarCiclistaDTO) {
         if(cadastrarCiclistaDTO == null) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
@@ -36,28 +39,17 @@ public class CiclistaService {
         }
 
         Ciclista ciclista = cadastrarCiclistaDTO.getCiclista();
-        CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getMeioDePagamento();
+        String numeroCartaoCredito = cadastrarCiclistaDTO.getMeioDePagamento().getNumero();
 
         if(!emailService.emailValido(ciclista.getEmail())) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
 
         // Integração 1
-        if(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)) {
+        if(!cartaoDeCreditoService.cartaoDeCreditoValido(numeroCartaoCredito)) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
-        this.validarDados(ciclista);
 
-        ciclista.setStatus(CiclistaStatus.AGUARDANDO_CONFIRMACAO);
-
-        dao.salvarCiclista(ciclista);
-
-        // Integração 2
-        emailService.enviarEmail(ciclista.getEmail(), MENSAGEM_ATIVACAO_CADASTRO);
-
-    }
-
-    private void validarDados(Ciclista ciclista) {
         if (ciclista.getNome() == null
                 || ciclista.getNascimento() == null
                 || ciclista.getCpf() == null
@@ -67,17 +59,49 @@ public class CiclistaService {
                 || ciclista.getUrlFotoDocumento() == null) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
+
+        ciclista.setStatus(CiclistaStatus.AGUARDANDO_CONFIRMACAO);
+
+        // Integração 2
+        emailService.enviarEmail(ciclista.getEmail(), MENSAGEM_ATIVACAO_CADASTRO);
+        dao.salvarCiclista(ciclista);
     }
 
+    /**
+     * Use Case 02
+     * @param idCiclista
+     */
     public void ativarCiclista(Long idCiclista) {
         Ciclista ciclista = recuperarCiclista(idCiclista);
-        if(!registroPendente(ciclista.getStatus())) {
+        if(!(ciclista.getStatus() == CiclistaStatus.AGUARDANDO_CONFIRMACAO)) {
             throw new IllegalArgumentException(ERRO_ATIVAR_CICLISATA);
         }
 
         ciclista.setStatus(CiclistaStatus.ATIVO);
     }
 
+    /**
+     * Use Case 03
+     * @param idCiclista
+     * @param trancaInicio
+     */
+    public void alugarBicicleta(Long idCiclista, Long trancaInicio) {
+        System.out.println("Bicicleta Liberada.");
+    }
+
+    /**
+     * Use Case 04
+     * @param idCiclista
+     * @param trancaInicio
+     */
+    public void devolverBicicleta(Long idCiclista, Long trancaInicio) {
+        System.out.println("Bicicleta devolvida.");
+    }
+
+    /**
+     * Use Case 06
+     * @param ciclista
+     */
     public void alterarCiclista(Ciclista ciclista) {
         if(ciclista == null) {
             throw new IllegalArgumentException(ERRO_ALTERAR_CICLISTA);
@@ -95,10 +119,6 @@ public class CiclistaService {
         }
 
         return dao.recuperarCiclista(idCiclista);
-    }
-
-    private boolean registroPendente(CiclistaStatus status) {
-        return status == CiclistaStatus.AGUARDANDO_CONFIRMACAO;
     }
 
 }

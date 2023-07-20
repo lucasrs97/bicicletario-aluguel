@@ -19,6 +19,12 @@ public class CartaoDeCreditoController {
     @Autowired
     private CartaoDeCreditoService cartaoDeCreditoService;
 
+    /**
+     * Use Case 07
+     * @param cartaoDeCredito
+     * @param idCiclista
+     * @return
+     */
     @PutMapping("/{idCiclista}")
     public ResponseEntity<String> alterarCartao(@RequestBody CartaoDeCredito cartaoDeCredito, @PathVariable Long idCiclista) {
         try {

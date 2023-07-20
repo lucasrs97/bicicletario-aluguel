@@ -8,13 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.api.util.Constantes.CICLISTA_ALTERADO_SUCESSO;
-import static com.api.util.Constantes.CICLISTA_CADASTRADO_SUCESSO;
-import static com.api.util.Constantes.EMAIL_CONFIRMADO_SUCESSO;
-import static com.api.util.Constantes.ERRO_ALTERAR_CICLISTA;
-import static com.api.util.Constantes.ERRO_ATIVAR_CICLISATA;
-import static com.api.util.Constantes.ERRO_CADASTRAR_CICLISTA;
-import static com.api.util.Constantes.ERRO_RECUPERAR_CICLISTA;
+import static com.api.util.Constantes.*;
 
 @RestController
 @RequestMapping("/ciclista")
@@ -54,8 +48,36 @@ public class CiclistaController {
     }
 
     /**
-     * Implementar 3, 4, 7 e copiar o 15
+     * Use Case 03
+     * @param idCiclista
+     * @param trancaInicio
+     * @return
      */
+    @PostMapping("/{idCiclista}/{trancaInicio}")
+    public ResponseEntity<String> alugarBicicleta(@PathVariable Long idCiclista, Long trancaInicio) {
+        try {
+            this.ciclistaService.alugarBicicleta(idCiclista, trancaInicio);
+            return new ResponseEntity<>(BICICLETA_LIBERADA, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_ALUGAR_BICICLETA, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    /**
+     * Use Case 04
+     * @param idCiclista
+     * @param idTraca
+     * @return
+     */
+    @PostMapping("/{idCiclista}/{trancaInicio}")
+    public ResponseEntity<String> devolverBicicleta(@PathVariable Long idCiclista, Long idTraca) {
+        try {
+            this.ciclistaService.devolverBicicleta(idCiclista, idTraca);
+            return new ResponseEntity<>(BICICLETA_DEVOLVIDA, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(ERRO_DEVOLVER_BICICLETA, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
 
     /**
      * Use Case 06
@@ -71,15 +93,5 @@ public class CiclistaController {
             return new ResponseEntity<>(ERRO_ALTERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
-
-    /*@GetMapping("/{idCiclista}")
-    public ResponseEntity<String> recuperar(@PathVariable Long idCiclista) {
-        try {
-            Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
-            return new ResponseEntity<>(ciclista.toString(), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-    }*/
 
 }

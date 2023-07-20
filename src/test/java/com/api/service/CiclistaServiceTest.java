@@ -96,12 +96,12 @@ class CiclistaServiceTest {
         when(cadastrarCiclistaDTO.getCiclista()).thenReturn(ciclista);
         when(cadastrarCiclistaDTO.getMeioDePagamento()).thenReturn(cartaoDeCredito);
         when(emailService.emailValido(ciclista.getEmail())).thenReturn(true);
-        when(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)).thenReturn(false);
+        when(cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito.getNumero())).thenReturn(false);
 
         assertThrows(IllegalArgumentException.class, () -> ciclistaService.cadastrarCiclista(cadastrarCiclistaDTO));
 
         verify(emailService).emailValido(ciclista.getEmail());
-        verify(cartaoDeCreditoService).cartaoDeCreditoInvalido(cartaoDeCredito);
+        verify(cartaoDeCreditoService).cartaoDeCreditoValido(cartaoDeCredito.getNumero());
         verifyNoMoreInteractions(emailService);
         verifyNoMoreInteractions(cartaoDeCreditoService);
         verifyNoInteractions(dao);
@@ -114,7 +114,7 @@ class CiclistaServiceTest {
         CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getMeioDePagamento();
 
         when(emailService.emailValido(ciclista.getEmail())).thenReturn(true);
-        when(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)).thenReturn(false);
+        when(cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito.getNumero())).thenReturn(false);
 
         Assertions.assertDoesNotThrow(() -> {
             ciclistaService.cadastrarCiclista(cadastrarCiclistaDTO);

@@ -35,21 +35,10 @@ class CartaoDeCreditoServiceTest {
     private EmailService emailService;
 
     @Test
-    void cartaoDeCreditoInvalido_deveRetornarTrueOuFalse() {
+    void cartaoDeCreditoValido_deveRetornarTrueOuFalse() {
         CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
-        assertTrue(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito));
-
-        cartaoDeCredito.setNomeTitular("Lucas");
-        assertTrue(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito));
-
-        cartaoDeCredito.setNumero("1234567890");
-        assertTrue(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito));
-
-        cartaoDeCredito.setValidade(new Date());
-        assertTrue(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito));
-
-        cartaoDeCredito.setCcv("123");
-        assertFalse(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito));
+        cartaoDeCredito.setNumero("4539148803436467");
+        assertTrue(cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito.getNumero()));
     }
 
     @Test
