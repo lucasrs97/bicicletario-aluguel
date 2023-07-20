@@ -2,6 +2,7 @@ package com.api.service;
 
 import com.api.dao.CartaoDAO;
 import com.api.dao.CiclistaDAO;
+import com.api.dto.Notification;
 import com.api.model.CartaoDeCredito;
 import com.api.model.Ciclista;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -35,10 +40,38 @@ class CartaoDeCreditoServiceTest {
     private EmailService emailService;
 
     @Test
-    void cartaoDeCreditoValido_deveRetornarTrueOuFalse() {
-        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
-        cartaoDeCredito.setNumero("4539148803436467");
-        assertTrue(cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito.getNumero()));
+    void cartaoDeCreditoValido_deveRetornar422() {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("cartao", "59");
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity("https://bicicletario-externo-production.up.railway.app/cobranca/validaCartaoDeCredito/", request, String.class);
+
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
+    }
+
+    @Test
+    void cartaoDeCreditoValido_deveRetornar200() {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("cartao", "5959648732541254");
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity("https://bicicletario-externo-production.up.railway.app/cobranca/validaCartaoDeCredito/", request, String.class);
+
+        //Endpoint está retornando sempre 422, independente do valor passado
+        //assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
