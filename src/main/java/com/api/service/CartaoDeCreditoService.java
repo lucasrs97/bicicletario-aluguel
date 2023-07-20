@@ -5,12 +5,10 @@ import com.api.dao.CiclistaDAO;
 import com.api.model.CartaoDeCredito;
 import com.api.model.Ciclista;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class CartaoDeCreditoService {
@@ -23,10 +21,6 @@ public class CartaoDeCreditoService {
 
     @Autowired
     private EmailService emailService;
-
-    @Autowired
-    @Qualifier("webClientExterno")
-    private WebClient apiExterno;
 
     @Autowired
     private RestTemplate restTemplate;
