@@ -23,8 +23,13 @@ public class CiclistaController {
     @Autowired
     private CiclistaService ciclistaService;
 
+    /**
+     * Use Case 01
+     * @param cadastro
+     * @return
+     */
     @PostMapping
-    public ResponseEntity<String> cadastrar(@RequestBody CadastrarCiclistaDTO cadastro) {
+    public ResponseEntity<String> cadastrarCiclista(@RequestBody CadastrarCiclistaDTO cadastro) {
         try {
             this.ciclistaService.cadastrarCiclista(cadastro);
             return new ResponseEntity<>(CICLISTA_CADASTRADO_SUCESSO, HttpStatus.CREATED);
@@ -33,6 +38,11 @@ public class CiclistaController {
         }
     }
 
+    /**
+     * Use Case 02
+     * @param idCiclista
+     * @return
+     */
     @PostMapping("/{idCiclista}/ativar")
     public ResponseEntity<String> confirmarEmail(@PathVariable Long idCiclista) {
         try {
@@ -43,8 +53,17 @@ public class CiclistaController {
         }
     }
 
+    /**
+     * Implementar 3, 4, 7 e copiar o 15
+     */
+
+    /**
+     * Use Case 06
+     * @param ciclista
+     * @return
+     */
     @PutMapping
-    public ResponseEntity<String> alterar(@RequestBody Ciclista ciclista) {
+    public ResponseEntity<String> alterarDadosCiclista(@RequestBody Ciclista ciclista) {
         try {
             this.ciclistaService.alterarCiclista(ciclista);
             return new ResponseEntity<>(CICLISTA_ALTERADO_SUCESSO, HttpStatus.OK);
@@ -53,7 +72,7 @@ public class CiclistaController {
         }
     }
 
-    @GetMapping("/{idCiclista}")
+    /*@GetMapping("/{idCiclista}")
     public ResponseEntity<String> recuperar(@PathVariable Long idCiclista) {
         try {
             Ciclista ciclista = this.ciclistaService.recuperarCiclista(idCiclista);
@@ -61,6 +80,6 @@ public class CiclistaController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(ERRO_RECUPERAR_CICLISTA, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-    }
+    }*/
 
 }

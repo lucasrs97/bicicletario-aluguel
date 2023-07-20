@@ -5,7 +5,12 @@ import com.api.dao.CiclistaDAO;
 import com.api.model.CartaoDeCredito;
 import com.api.model.Ciclista;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class CartaoDeCreditoService {
@@ -19,22 +24,39 @@ public class CartaoDeCreditoService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    @Qualifier("webClientExterno")
+    private WebClient apiExterno;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private static final String URL_EXTERNOS = "https://bicicletario-pm-production.up.railway.app/";
+
+
     public boolean cartaoDeCreditoInvalido(CartaoDeCredito cartaoDeCredito) {
-        return cartaoDeCredito.getNomeTitular() == null
-                || cartaoDeCredito.getNumero() == null
-                || cartaoDeCredito.getValidade() == null
-                || cartaoDeCredito.getCcv() == null;
+
+        HttpEntity<String> request = new HttpEntity<>(cartaoDeCredito.getNumero());
+        ResponseEntity<String> response = restTemplate
+                .postForEntity(URL_EXTERNOS + "cobranca/validaCartaoDeCredito/", request, String.class);
+
+        String body = response.getBody();
+        System.out.println(body);
+        return true;
+
     }
 
     public void alterar(CartaoDeCredito cartaoDeCredito, Long idCiclista) {
         Ciclista ciclista = dao.recuperarCiclista(idCiclista);
 
-        // [A2] Cartão reprovado
+        // Integração 1
         if(cartaoDeCreditoInvalido(cartaoDeCredito)) {
             throw new IllegalArgumentException("Cartão de crédito reprovado.");
         }
 
         cartaoDAO.alterarCartao(cartaoDeCredito);
+
+        // Integração 2
         emailService.enviarEmail(ciclista.getEmail(), "Dados do cartão alterados com sucesso.");
     }
 

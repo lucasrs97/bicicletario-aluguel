@@ -38,21 +38,23 @@ public class CiclistaService {
         Ciclista ciclista = cadastrarCiclistaDTO.getCiclista();
         CartaoDeCredito cartaoDeCredito = cadastrarCiclistaDTO.getMeioDePagamento();
 
-        // [A1] Email já cadastrado ou inválido
         if(!emailService.emailValido(ciclista.getEmail())) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
-        // [A3] Cartão reprovado
+
+        // Integração 1
         if(cartaoDeCreditoService.cartaoDeCreditoInvalido(cartaoDeCredito)) {
             throw new IllegalArgumentException(ERRO_CADASTRAR_CICLISTA);
         }
-        // [A2] Dados inválidos
         this.validarDados(ciclista);
 
         ciclista.setStatus(CiclistaStatus.AGUARDANDO_CONFIRMACAO);
 
         dao.salvarCiclista(ciclista);
+
+        // Integração 2
         emailService.enviarEmail(ciclista.getEmail(), MENSAGEM_ATIVACAO_CADASTRO);
+
     }
 
     private void validarDados(Ciclista ciclista) {
@@ -82,6 +84,8 @@ public class CiclistaService {
         }
 
         dao.alterarCiclista(ciclista);
+
+        // Integração 2
         emailService.enviarEmail(ciclista.getEmail(), DADOS_ALTERADOS_SUCESSO);
     }
 
