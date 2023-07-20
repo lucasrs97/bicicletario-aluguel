@@ -1,14 +1,20 @@
 package com.api.service;
 
+import com.api.dto.Notification;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 class EmailServiceTest {
@@ -32,10 +38,21 @@ class EmailServiceTest {
     }
 
     @Test
-    void enviarEmail_deveEnviarEmail() {
+    void enviarEmailIntegracao_deveEnviarEmail() {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+
         String email = "lucas@gmail.com";
-        String mensaegm = "E-mail enviado.";
-        assertDoesNotThrow(() -> emailService.enviarEmail(email, mensaegm));
+        String mensagem = "E-mail enviado.";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Notification notification = new Notification(email, "Cadastro de Ciclista", mensagem);
+        HttpEntity<Notification> request = new HttpEntity<>(notification, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity("https://bicicletario-externo-production.up.railway.app/notificacao/enviar-email/", request, String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
 }

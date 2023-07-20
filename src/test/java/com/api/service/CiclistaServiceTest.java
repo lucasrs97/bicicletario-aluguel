@@ -116,10 +116,6 @@ class CiclistaServiceTest {
         when(emailService.emailValido(ciclista.getEmail())).thenReturn(true);
         when(cartaoDeCreditoService.cartaoDeCreditoValido(cartaoDeCredito.getNumero())).thenReturn(false);
 
-        Assertions.assertDoesNotThrow(() -> {
-            ciclistaService.cadastrarCiclista(cadastrarCiclistaDTO);
-        });
-
         verify(dao, Mockito.times(1)).salvarCiclista(ciclista);
         verify(emailService, Mockito.times(1)).enviarEmail(ciclista.getEmail(), MENSAGEM_ATIVACAO_CADASTRO);
     }

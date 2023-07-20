@@ -53,7 +53,7 @@ public class CiclistaController {
      * @param trancaInicio
      * @return
      */
-    @PostMapping("/{idCiclista}/{trancaInicio}")
+    @PostMapping("/alugar/{idCiclista}/{trancaInicio}")
     public ResponseEntity<String> alugarBicicleta(@PathVariable Long idCiclista, Long trancaInicio) {
         try {
             this.ciclistaService.alugarBicicleta(idCiclista, trancaInicio);
@@ -69,7 +69,7 @@ public class CiclistaController {
      * @param idTraca
      * @return
      */
-    @PostMapping("/{idCiclista}/{trancaInicio}")
+    @PostMapping("/devolver/{idCiclista}/{trancaInicio}")
     public ResponseEntity<String> devolverBicicleta(@PathVariable Long idCiclista, Long idTraca) {
         try {
             this.ciclistaService.devolverBicicleta(idCiclista, idTraca);
